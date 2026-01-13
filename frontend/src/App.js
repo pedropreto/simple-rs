@@ -110,7 +110,8 @@ function App() {
               onClick={() => setCurrentSkill(skill)}
               className="node-button"
              >
-              {skill.charAt(0).toUpperCase() + skill.slice(1)}
+              {skill.charAt(0).toUpperCase() + skill.slice(1)}{' '}
+              (Level {game.skills[skill].level})
             </button>
           ))}
         </div>
@@ -126,8 +127,8 @@ function App() {
      <div style={{ padding: 20 }}>
       <button onClick={() => setCurrentSkill(null)}>← Back to Menu</button>
       <h1>
-        {currentSkill.charAt(0).toUpperCase() + currentSkill.slice(1)} XP:{" "}
-        {skillData.xp}
+        {currentSkill.charAt(0).toUpperCase() + currentSkill.slice(1)}{" "}
+        XP: {skillData.xp} | Level: {skillData.level}
       </h1>
     <div className="button-grid">
   {Object.entries(skillNodes)

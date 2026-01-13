@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json, time
 from data import WOODCUTTING_NODES, MINING_NODES
+import pdb
 
 app = Flask(__name__)
 CORS(app)
@@ -52,10 +53,12 @@ def start():
 
 @app.route("/finish", methods=["POST"])
 def finish():
+    
     data = load()
     skill = request.json["skill"]
     skill_data = data["skills"][skill]
     job = skill_data["job"]
+    
 
     if not job:
         return jsonify({"error": "No job running"}), 400
@@ -66,7 +69,10 @@ def finish():
     if elapsed >= job["duration"]:
         # Apply XP
         skill_data["xp"] += job["xp"]
+        #pdb.set_trace()
+        skill_data["level"] = int(skill_data["xp"] ** 0.5)  # simple sqrt formula
         skill_data["job"] = None
+        #pdb.set_trace()
         save(data)
         return jsonify({"message": f"{skill} job finished", "state": data})
     else:
